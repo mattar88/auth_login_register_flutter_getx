@@ -29,9 +29,9 @@ Tools • Dart 2.16.1 • DevTools 2.9.2
 1. Download Flutter version mentioned above
 2. Clone the project
 
-3. Open`````` lib  > confi > config_api.dart`````` then add the variables values
+3. Open`````` lib  > confi > config_api.dart`````` then set the variables
 
-4. Open `````` lib > services > auth_api_service.dart``````  then put your REST API URL by changing the following variables values
+4. Open `````` lib > services > auth_api_service.dart``````  then set your REST API URL by changing the following variables
 ``````
  signUpUrl = '/api/user';
  signInUrl = '/oauth2/token';
