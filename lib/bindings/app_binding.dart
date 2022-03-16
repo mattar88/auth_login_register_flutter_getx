@@ -1,4 +1,4 @@
-import 'package:general_directorate_grains/services/connectivity_service.dart';
+import 'package:auth_login_register_flutter_getx/services/connectivity_service.dart';
 import 'package:get/get.dart';
 
 class AppBinding extends Bindings {

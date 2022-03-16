@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:general_directorate_grains/controllers/auth_controller.dart';
-import 'package:general_directorate_grains/controllers/home_controller.dart';
-import 'package:general_directorate_grains/routes/app_routes.dart';
+import 'package:auth_login_register_flutter_getx/controllers/auth_controller.dart';
+import 'package:auth_login_register_flutter_getx/controllers/home_controller.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends GetView<HomeController> {

@@ -1,4 +1,4 @@
-package com.example.general_directorate_grains
+package com.auth_login_register_flutter_getx
 
 import io.flutter.embedding.android.FlutterActivity
 

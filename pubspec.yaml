@@ -1,5 +1,5 @@
-name: general_directorate_grains
-description: A new Flutter project.
+name: auth_login_register_flutter_getx
+description: Authentication login and register with Flutter Getx.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

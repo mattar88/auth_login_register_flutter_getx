@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:general_directorate_grains/services/cache_service.dart';
+import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
 import 'package:get/get.dart';
 
 import '../routes/app_routes.dart';

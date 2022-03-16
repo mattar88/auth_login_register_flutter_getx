@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:general_directorate_grains/config/config_api.dart';
-import 'package:general_directorate_grains/controllers/auth_controller.dart';
-import 'package:general_directorate_grains/models/token_model.dart';
-import 'package:general_directorate_grains/routes/app_routes.dart';
+import 'package:auth_login_register_flutter_getx/config/config_api.dart';
+import 'package:auth_login_register_flutter_getx/controllers/auth_controller.dart';
+import 'package:auth_login_register_flutter_getx/models/token_model.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
 
 import 'package:get/get.dart';
 

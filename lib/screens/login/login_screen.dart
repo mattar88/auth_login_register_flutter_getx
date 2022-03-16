@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:general_directorate_grains/controllers/login_controller.dart';
-import 'package:general_directorate_grains/routes/app_routes.dart';
-import 'package:general_directorate_grains/widgets/loading_overlay.dart';
+import 'package:auth_login_register_flutter_getx/controllers/login_controller.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
+import 'package:auth_login_register_flutter_getx/widgets/loading_overlay.dart';
 
 import 'package:get/get.dart';
 

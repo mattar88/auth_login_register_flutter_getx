@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.general_directorate_grains">
+    package="com.auth_login_register_flutter_getx">
    <application
-        android:label="general_directorate_grains"
+        android:label="auth_login_register_flutter_getx"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

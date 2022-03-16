@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:general_directorate_grains/controllers/auth_controller.dart';
-import 'package:general_directorate_grains/services/cache_service.dart';
-import 'package:general_directorate_grains/widgets/Loading_overlay.dart';
+import 'package:auth_login_register_flutter_getx/controllers/auth_controller.dart';
+import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
+import 'package:auth_login_register_flutter_getx/widgets/Loading_overlay.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 

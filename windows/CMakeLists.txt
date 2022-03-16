@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(general_directorate_grains LANGUAGES CXX)
+project(auth_login_register_flutter_getx LANGUAGES CXX)
 
-set(BINARY_NAME "general_directorate_grains")
+set(BINARY_NAME "auth_login_register_flutter_getx")
 
 cmake_policy(SET CMP0063 NEW)
 

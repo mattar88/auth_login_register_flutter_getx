@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:general_directorate_grains/bindings/home_binding.dart';
-import 'package:general_directorate_grains/bindings/login_binding.dart';
-import 'package:general_directorate_grains/bindings/signup_binding.dart';
-import 'package:general_directorate_grains/middlewares/auth_middleware.dart';
-import 'package:general_directorate_grains/routes/app_routes.dart';
-import 'package:general_directorate_grains/screens/home/home_screen.dart';
-import 'package:general_directorate_grains/screens/signup/signup_screen.dart';
+import 'package:auth_login_register_flutter_getx/bindings/home_binding.dart';
+import 'package:auth_login_register_flutter_getx/bindings/login_binding.dart';
+import 'package:auth_login_register_flutter_getx/bindings/signup_binding.dart';
+import 'package:auth_login_register_flutter_getx/middlewares/auth_middleware.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
+import 'package:auth_login_register_flutter_getx/screens/home/home_screen.dart';
+import 'package:auth_login_register_flutter_getx/screens/signup/signup_screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 

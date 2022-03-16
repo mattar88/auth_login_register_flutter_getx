@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:general_directorate_grains/config/config_api.dart';
-import 'package:general_directorate_grains/mixins/helper_mixin.dart';
-import 'package:general_directorate_grains/models/token_model.dart';
+import 'package:auth_login_register_flutter_getx/config/config_api.dart';
+import 'package:auth_login_register_flutter_getx/mixins/helper_mixin.dart';
+import 'package:auth_login_register_flutter_getx/models/token_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

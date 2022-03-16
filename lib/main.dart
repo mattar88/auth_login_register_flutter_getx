@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:general_directorate_grains/routes/app_routes.dart';
-import 'package:general_directorate_grains/routes/app_pages.dart';
-import 'package:general_directorate_grains/services/auth_api_service.dart';
-import 'package:general_directorate_grains/services/cache_service.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_pages.dart';
+import 'package:auth_login_register_flutter_getx/services/auth_api_service.dart';
+import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

@@ -1,3 +1,3 @@
-import 'package:general_directorate_grains/mixins/helper_mixin.dart';
+import 'package:auth_login_register_flutter_getx/mixins/helper_mixin.dart';
 
 class HomeModel {}

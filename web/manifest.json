@@ -1,6 +1,6 @@
 {
-    "name": "general_directorate_grains",
-    "short_name": "general_directorate_grains",
+    "name": "auth_login_register_flutter_getx",
+    "short_name": "auth_login_register_flutter_getx",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

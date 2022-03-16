@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "general_directorate_grains" "\0"
+            VALUE "FileDescription", "auth_login_register_flutter_getx" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "general_directorate_grains" "\0"
+            VALUE "InternalName", "auth_login_register_flutter_getx" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "general_directorate_grains.exe" "\0"
-            VALUE "ProductName", "general_directorate_grains" "\0"
+            VALUE "OriginalFilename", "auth_login_register_flutter_getx.exe" "\0"
+            VALUE "ProductName", "auth_login_register_flutter_getx" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

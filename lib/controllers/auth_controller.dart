@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:general_directorate_grains/models/token_model.dart';
-import 'package:general_directorate_grains/routes/app_routes.dart';
-import 'package:general_directorate_grains/services/cache_service.dart';
+import 'package:auth_login_register_flutter_getx/models/token_model.dart';
+import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
+import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
 import 'package:get/get.dart';
 import '../services/auth_api_service.dart';
 
