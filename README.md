@@ -10,6 +10,36 @@ In this project I used the powerful features of Getx like state management, Depe
 ## Architecture 
  <img src="https://raw.githubusercontent.com/mattar88/auth_login_register_flutter_getx/main/screenshots/architecture.png" width="300">
  
+ ``````
+ #In this repository we will deposit our routes and pages. 
+ - /routes
+     # Contains the settings of pages(name Binding, midellwares,..).
+     - app_pages.dart
+     # Contains name of pages
+     - app_routes.dart 
+ #Bindings are classes where we can declare our dependencies and then 'bind' them to the routes page.    
+ - /binding
+     # In this binding inject the dependencies that used as soon as the app starts 
+     contains ConnectivityServices to check if there is Internet Connectivity
+     - app_binding.dart
+     # We inject the home services api and the home controller
+     - home_binding.dart 
+     # We inject the login api services and the login controller
+     - login_binding.dart
+     # We inject the register api services and the signup controller
+     - signup_binding.dart
+ # In this repository we declare the middleware of routes    
+ - /middlewares
+     # This middleware is use by home route to check if there is a access token
+     in the local storage before open the Home page
+     - auth_middleware.dart
+  # In this repository we declare the mixins classes where is the StateMixin and the common functionality
+  # You can use the StateMixin to handle your UI state in a more efficient and clean way, when you perform asynchronous tasks
+ - /mixins
+     # We declare the helper class that contains common functionality that implement by multiple classes
+     - helper_mixin.dart    
+ ``````       
+ 
 ## Flutter Version
 ``````
 PS > flutter --version
