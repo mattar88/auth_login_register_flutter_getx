@@ -38,7 +38,22 @@ In this project I used the powerful features of Getx like state management, Depe
  - /mixins
      # We declare the helper class that contains common functionality that implement by multiple classes
      - helper_mixin.dart  
-  #In this repository we declare the Controllers which responsible for controlling the application logic and acts as the coordinator between the Screens and the Models.   
+  #In this repository we declare the Controllers which responsible for controlling the application logic and acts as the coordinator between the Screens and the Models.
+  #Here our repositories are just classes that will mediate the communication between our controller and our data.
+  # Our controllers won't need to know where the data comes from, And inside it will contain all its functions 
+  # that will request data from a local api or REST api.
+ - /services
+     #In this file we declare all the constants that needed to communicate with server using http request 
+     # and its responsible to authentication and authorization requests.
+     - api_service.dart
+     #Contains the sigin and signup rest api functions
+     - auth_api_service.dart
+     #Contains the functions that communicate with the local storage to CRUD the access token and other variables using get_storage package
+     - cache_service.dart 
+     #It responsible to the status of internet connection it use internet_connection_checker package
+     - connectivity_service.dart
+     #Contains the REST api service of home
+     - home_api_service.dart
  - /controllers
      # Responsible for signin and signup and share this functionality with login and signup controllers
      - auth_controller.dart  
@@ -58,6 +73,8 @@ In this project I used the powerful features of Getx like state management, Depe
      - home_model.dart  
      #Used by auht controller to represent the token loaded when login or register
      - token_model.dart  
+     
+     
  ``````       
  
 ## Flutter Version
