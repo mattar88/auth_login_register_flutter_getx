@@ -30,14 +30,34 @@ In this project I used the powerful features of Getx like state management, Depe
      - signup_binding.dart
  # In this repository we declare the middleware of routes    
  - /middlewares
-     # This middleware is use by home route to check if there is a access token
-     in the local storage before open the Home page
+     # This middleware is use by home route to check if there is an access token
+     in the local storage before open the Home page or redirect to Login page
      - auth_middleware.dart
   # In this repository we declare the mixins classes where is the StateMixin and the common functionality
   # You can use the StateMixin to handle your UI state in a more efficient and clean way, when you perform asynchronous tasks
  - /mixins
      # We declare the helper class that contains common functionality that implement by multiple classes
-     - helper_mixin.dart    
+     - helper_mixin.dart  
+  #In this repository we declare the Controllers which responsible for controlling the application logic and acts as the coordinator between the Screens and the Models.   
+ - /controllers
+     # Responsible for signin and signup and share this functionality with login and signup controllers
+     - auth_controller.dart  
+     #Contains the logic and the functionality of home page
+     - home_controller.dart  
+     #Containes the logic of Login page(Form validations, sigin request and other) and inherit some functionality from auth controller
+     - login_controller.dart  
+     #Containes the logic of Login page and inherit some functionality from auth controller
+     - signup_controller.dart.dart
+  #In this repository we declare the Classes that represents the core information that application is being used to access and manipulate   
+ - /models
+     - home_model.dart  
+     #Used by auht controller to represent the token loaded when login or register
+     - token_model.dart
+ #In this repository we declare the Classes that contains a widgets and data form widgets that produces a view to mobile screen or  browser
+ - /screens
+     - home_model.dart  
+     #Used by auht controller to represent the token loaded when login or register
+     - token_model.dart  
  ``````       
  
 ## Flutter Version
