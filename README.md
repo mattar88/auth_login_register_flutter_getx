@@ -73,8 +73,14 @@ In this project I used the powerful features of Getx like state management, Depe
      - home_model.dart  
      #Used by auht controller to represent the token loaded when login or register
      - token_model.dart  
-     
-     
+#Contains global widgets     
+- /widgets
+    -loading_overlay.dart
+#Contains global configuration     
+- /config
+    -config_api.dart
+#Here is declared the main configuration of application (Theme, Initial route, Initial binding, Pages)   
+-main.dart     
  ``````       
  
 ## Flutter Version
@@ -85,6 +91,17 @@ Framework • revision db747aa133 (5 weeks ago) • 2022-02-09 13:57:35 -0600
 Engine • revision ab46186b24
 Tools • Dart 2.16.1 • DevTools 2.9.2
 
+``````
+## Dependencies:
+``````
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get: ^4.6.1
+  equatable: ^2.0.3
+  http: ^0.13.4
+  get_storage: ^2.0.3
+  internet_connection_checker: ^0.0.1+3
 ``````
 
 ## Change the project name
