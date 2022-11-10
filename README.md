@@ -2,6 +2,10 @@
 Flutter Getx project that covered a best architecture and functionality of Authentication, Login and Register using Rest API
 In this project I used the powerful features of Getx like state management, Dependency injection, Route management, localStorage...
 
+# OAuth Grant Types
+1. OAuth 2.0 Authorization Code Grant\
+2. Resource Owner Password Credentials Grant
+
 ## Screenshots
 | Login Screen  | Register screen | Offline pop-up  |
 | :------------ | :------------- | :------------ |
@@ -54,6 +58,9 @@ In this project I used the powerful features of Getx like state management, Depe
      - connectivity_service.dart
      #Contains the REST api service of home
      - home_api_service.dart
+      #Contains the REST api service of home
+     -oauth_client_service.dart
+     #Contains the endpoints and the  functionality for Client  OAuth2
  - /controllers
      # Responsible for signin and signup and share this functionality with login and signup controllers
      - auth_controller.dart  
@@ -86,10 +93,10 @@ In this project I used the powerful features of Getx like state management, Depe
 ## Flutter Version
 ``````
 PS > flutter --version
-Flutter 2.10.1 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision db747aa133 (5 weeks ago) • 2022-02-09 13:57:35 -0600
-Engine • revision ab46186b24
-Tools • Dart 2.16.1 • DevTools 2.9.2
+Flutter 3.3.2 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision e3c29ec00c (8 weeks ago) • 2022-09-14 08:46:55 -0500
+Engine • revision a4ff2c53d8
+Tools • Dart 2.18.1 • DevTools 2.15.0
 
 ``````
 ## Dependencies:
@@ -97,11 +104,13 @@ Tools • Dart 2.16.1 • DevTools 2.9.2
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  get: ^4.6.1
+  get: ^4.6.5
   equatable: ^2.0.3
   http: ^0.13.4
   get_storage: ^2.0.3
   internet_connection_checker: ^0.0.1+3
+  oauth2: ^2.0.0
+  webview_flutter: ^3.0.4
 ``````
 
 ## Change the project name
@@ -117,8 +126,12 @@ Tools • Dart 2.16.1 • DevTools 2.9.2
 
 4. Open `````` lib > services > auth_api_service.dart``````  then set your REST API URL by changing the following variables
 ``````
- signUpUrl = '/api/user';
+ signUpUrl = '/jsonapi/user/register';
  signInUrl = '/oauth2/token';
- refreshTokenUrl = '/oauth2/token';
 ``````
-
+5. Open `````` lib > services > oauth_client_service.dart``````  then set your REST API URL by changing the following variables
+``````
+ authorizationUrl = '';
+ refreshTokenUrl = '';
+ redirectUrl = '';
+``````
