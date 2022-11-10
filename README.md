@@ -3,7 +3,7 @@ Flutter Getx project that covered a best architecture and functionality of Authe
 In this project I used the powerful features of Getx like state management, Dependency injection, Route management, localStorage...
 
 # OAuth Grant Types
-1. OAuth 2.0 Authorization Code Grant\
+1. OAuth 2.0 Authorization Code Grant
 2. Resource Owner Password Credentials Grant
 
 ## Screenshots
