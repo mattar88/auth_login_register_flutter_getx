@@ -8,7 +8,6 @@ import 'api_service.dart';
 class AuthApiService extends ApiService {
   static String signUpUrl = '/jsonapi/user/register';
   static String signInUrl = '/oauth/token';
-  static String refreshTokenUrl = '/oauth/token';
 
   Future<Response?> signUp(Map<String, dynamic> data) async {
     try {
@@ -28,16 +27,6 @@ class AuthApiService extends ApiService {
       printError(info: e.toString());
       rethrow;
     }
-  }
-
-  Future<Response> sendRefreshToken(refreshToken) async {
-    return post(
-      refreshTokenUrl,
-      {
-        'refresh_token': refreshToken,
-        'grant_type': 'refresh_token',
-      },
-    );
   }
 
 //   void signOut() async {
