@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:auth_login_register_flutter_getx/models/token_model.dart';
-import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
-import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
+import 'package:auth_login_register_flutter_getx/services/oauth_client_service.dart';
+import 'package:oauth2/oauth2.dart';
+
+import '../routes/app_routes.dart';
+import '../services/cache_service.dart';
 import 'package:get/get.dart';
 import '../services/auth_api_service.dart';
 
@@ -10,86 +12,61 @@ import '../services/auth_api_service.dart';
 // for some widget button like signout and other
 class AuthController extends GetxController {
   final AuthApiService _authenticationService;
-  final CacheService _cacheServices;
+  final OAuthClientService _oAuthClientService;
 
-  AuthController(this._authenticationService, this._cacheServices);
+  AuthController(this._authenticationService, this._oAuthClientService);
 
-  Future<TokenModel?> signIn(String email, String password) async {
-    TokenModel? tokenData;
+  Future<Credentials?> signIn(String email, String password) async {
     try {
       log('Enter Signin');
-      var response = await _authenticationService.signIn(email, password);
-      log('is logged in : ${response.statusCode}');
-
-      if (response.statusCode == 200) {
-        log('${response.body}');
-        tokenData = TokenModel.fromJson(response.body);
-        _cacheServices.login(tokenData);
-      } else {
-        var message = response.body['error_description'];
-        log('message---{message}');
-        throw Exception(message ?? 'An error occurred, please try again.');
-      }
+      return await _oAuthClientService.authGrantPassword(email, password);
+      // log('is logged in : ${crednetials!.accessToken}');
     } catch (e) {
       // printLog(e);
       printError(info: e.toString());
       rethrow;
     }
-    return tokenData;
   }
 
-  Future<TokenModel?> signUp(Map<String, dynamic> data) async {
-    TokenModel? tokenData;
+  Future<Response?> signUp(Map<String, dynamic> data) async {
     String error_m =
         'An error occurred while registering, please contact the administrator.';
     try {
-      var response = await _authenticationService.signUp(data);
-      log('is signup : ${response.toString()}');
-      if (response.statusCode == 200) {
-        log('enter signup');
+      return await _authenticationService.signUp(data);
 
-        tokenData = await signIn(data['email'], data['password']);
-      } else {
-        // var message = response.body['error_description'];
+      // if (response.statusCode == 200) {
+      //   log('enter signup');
 
-        throw Exception(error_m);
-      }
+      //   // tokenData = await signIn(data['email'], data['password']);
+      // } else {
+      //   // var message = response.body['error_description'];
+
+      //   throw Exception(error_m);
+      // }
     } catch (e) {
       // printLog(e);
       printError(info: e.toString());
       throw Exception(error_m);
     }
-    return tokenData;
+    // return tokenData;
   }
 
-  Future<TokenModel?> refreshToken() async {
-    if (_cacheServices.token == null) return null;
-    TokenModel? tokenData;
+  Future<Credentials?> refreshToken() async {
     try {
-      var response = await _authenticationService
-          .refreshToken(_cacheServices.token!.refreshToken);
-      if (response.statusCode == 200) {
-        log('refreshToken():  ${response.body}');
-        tokenData = TokenModel.fromJson(response.body);
-        _cacheServices.login(tokenData);
-      } else {
-        var message = response.body['error_description'];
-        throw Exception(message ?? 'An error occurred, please try again.');
-      }
+      return _oAuthClientService.refreshToken();
     } catch (e) {
       printError(info: 'exception refreshToken 1:  ${e.toString()}');
       rethrow;
     }
-    return tokenData;
   }
 
-  TokenModel? token() => _cacheServices.token;
+  Credentials? tokenCredentials() => _oAuthClientService.credentials;
 
   void signOut() async {
-    _cacheServices.logOut();
+    _oAuthClientService.removeCredentails();
   }
 
   bool isAuthenticated() {
-    return !_cacheServices.sessionIsExpired();
+    return !_oAuthClientService.sessionIsExpired();
   }
 }

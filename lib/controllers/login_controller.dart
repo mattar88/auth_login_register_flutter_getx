@@ -3,9 +3,10 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auth_login_register_flutter_getx/controllers/auth_controller.dart';
-import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
-import 'package:auth_login_register_flutter_getx/widgets/Loading_overlay.dart';
+import '../controllers/auth_controller.dart';
+import '../services/cache_service.dart';
+import '../services/oauth_client_service.dart';
+import '../widgets/Loading_overlay.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -17,9 +18,9 @@ class LoginController extends AuthController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  LoginController(
-      AuthApiService authenticationService, CacheService cacheServices)
-      : super(authenticationService, cacheServices);
+  LoginController(AuthApiService authenticationService,
+      OAuthClientService oAuthClientService)
+      : super(authenticationService, oAuthClientService);
 
   @override
   void onClose() {
@@ -51,6 +52,17 @@ class LoginController extends AuthController {
       }
     } else {
       throw Exception('An error occurred, invalid inputs value');
+    }
+  }
+
+  Future<void> loginWithBrowser() async {
+    try {
+      log('Login with browser');
+      log('is authenticated: ${isAuthenticated()}');
+      // await OAuthClient().createClient();
+      // await signIn(emailController.text, passwordController.text);
+    } catch (err, _) {
+      rethrow;
     }
   }
 }

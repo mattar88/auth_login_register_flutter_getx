@@ -1,7 +1,9 @@
 class ConfigAPI {
-  static const String basrUrl = 'BASE_URL';
-  static const String clientId = 'CLIENT_ID';
-  static const String clientSecret = 'CLIENT_SECRET';
+  static const String basrUrl = 'YOUR_BASE_PASS_APP';
   static const int sessionTimeoutThreshold =
-      300; // Will refresh the access token 5 minutes before it expires
+      0; // Will refresh the access token 5 minutes before it expires
+  static const bool loginWithPassword = true; // if false hide the form login
+  //if false hide the fields password and confirm password from signup form
+  //for security reason and the password generated after verification mail
+  static const bool signupWithPassword = true;
 }

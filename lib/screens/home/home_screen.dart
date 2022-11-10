@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:auth_login_register_flutter_getx/controllers/auth_controller.dart';
-import 'package:auth_login_register_flutter_getx/controllers/home_controller.dart';
-import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/home_controller.dart';
+import '../../routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -30,14 +30,26 @@ class HomeScreen extends GetView<HomeController> {
                   Get.find<AuthController>().signOut();
                   Get.offAllNamed(Routes.LOGIN);
                 },
-                child: const Text("Signout")),
+                child: const Text("Signout",
+                    style: TextStyle(color: Colors.blue))),
           ],
         )),
 
         // here you can put your custom loading indicator, but
         // by default would be Center(child:CircularProgressIndicator())
         onLoading: CircularProgressIndicator(),
-        onEmpty: Text('No data found'),
+        onEmpty: Column(
+          children: [
+            const Text('No Data found'),
+            ElevatedButton(
+                onPressed: () {
+                  Get.find<AuthController>().signOut();
+                  Get.offAllNamed(Routes.LOGIN);
+                },
+                child: const Text("Signout",
+                    style: TextStyle(color: Colors.white))),
+          ],
+        ),
 
         // here also you can set your own error widget, but by
         // default will be an Center(child:Text(error))

@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:auth_login_register_flutter_getx/config/config_api.dart';
+import 'package:auth_login_register_flutter_getx/services/oauth_client_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auth_login_register_flutter_getx/controllers/auth_controller.dart';
-import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
+import '../controllers/auth_controller.dart';
+import '../services/cache_service.dart';
 
 import '../services/auth_api_service.dart';
 
@@ -25,9 +27,9 @@ class SignupController extends AuthController {
   FocusNode passwordFocusNode = FocusNode();
   FocusNode confirmPasswordFocusNode = FocusNode();
 
-  SignupController(
-      AuthApiService authenticationService, CacheService cacheServices)
-      : super(authenticationService, cacheServices);
+  SignupController(AuthApiService authenticationService,
+      OAuthClientService oauthClientService)
+      : super(authenticationService, oauthClientService);
 
   void onInit() {
     _addListener();
@@ -133,15 +135,24 @@ class SignupController extends AuthController {
   }
 
   Future<void> signup() async {
-    log('${emailController.text}, ${passwordController.text}');
+    // log('${emailController.text}, ${passwordController.text}');
     if (signupFormKey.currentState!.validate()) {
       try {
-        await signUp(<String, String>{
+        var data = <String, String>{
           'username': usernameController.text,
           'email': emailController.text,
-          'password': passwordController.text,
-          'confirmPassword': confirmPasswordController.text,
-        });
+        };
+        if (ConfigAPI.loginWithPassword) {
+          data = {
+            ...data,
+            'password': passwordController.text,
+            'confirmPassword': confirmPasswordController.text,
+          };
+        }
+        await signUp(data);
+        if (ConfigAPI.loginWithPassword) {
+          signIn(usernameController.text, passwordController.text);
+        }
       } catch (err, _) {
         // message = 'There is an issue with the app during request the data, '
         //         'please contact admin for fixing the issues ' +

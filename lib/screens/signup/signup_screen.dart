@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:auth_login_register_flutter_getx/controllers/signup_controller.dart';
-import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
-import 'package:auth_login_register_flutter_getx/widgets/loading_overlay.dart';
+import '../../config/config_api.dart';
+import '../../controllers/signup_controller.dart';
+import '../../routes/app_routes.dart';
+import '../../widgets/loading_overlay.dart';
 
 import 'package:get/get.dart';
 
@@ -46,36 +47,39 @@ class SignupScreen extends GetView<SignupController> {
                   focusNode: controller.emailFocusNode,
                   validator: controller.emailValidator,
                 ),
-                TextFormField(
-                  key: controller.formPasswordFieldKey,
-                  controller: controller.passwordController,
-                  focusNode: controller.passwordFocusNode,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.security),
-                    hintText: 'Password',
+                if (ConfigAPI.signupWithPassword)
+                  TextFormField(
+                    key: controller.formPasswordFieldKey,
+                    controller: controller.passwordController,
+                    focusNode: controller.passwordFocusNode,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.security),
+                      hintText: 'Password',
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: controller.passwordValidator,
+                    obscureText: true,
                   ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: controller.passwordValidator,
-                  obscureText: true,
-                ),
-                TextFormField(
-                  key: controller.formConfirmPasswordFieldKey,
-                  controller: controller.confirmPasswordController,
-                  focusNode: controller.confirmPasswordFocusNode,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.security),
-                    hintText: 'Confirm password',
+                if (ConfigAPI.signupWithPassword)
+                  TextFormField(
+                    key: controller.formConfirmPasswordFieldKey,
+                    controller: controller.confirmPasswordController,
+                    focusNode: controller.confirmPasswordFocusNode,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.security),
+                      hintText: 'Confirm password',
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: controller.confirmPasswordValidator,
+                    obscureText: true,
                   ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: controller.confirmPasswordValidator,
-                  obscureText: true,
-                ),
                 ElevatedButton(
                     onPressed: () async {
                       if (controller.signupFormKey.currentState!.validate()) {
                         LoadingOverlay.show(message: 'Registering...');
                         try {
                           await controller.signup();
+
                           controller.signupFormKey.currentState!.save();
                           log('response signup');
 

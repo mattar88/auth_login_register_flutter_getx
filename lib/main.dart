@@ -1,10 +1,11 @@
 import 'dart:developer';
 
+import 'package:auth_login_register_flutter_getx/services/oauth_client_service.dart';
 import 'package:flutter/material.dart';
-import 'package:auth_login_register_flutter_getx/routes/app_routes.dart';
-import 'package:auth_login_register_flutter_getx/routes/app_pages.dart';
-import 'package:auth_login_register_flutter_getx/services/auth_api_service.dart';
-import 'package:auth_login_register_flutter_getx/services/cache_service.dart';
+import '../routes/app_routes.dart';
+import '../routes/app_pages.dart';
+import '../services/auth_api_service.dart';
+import '../services/cache_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -38,8 +39,11 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> initializeApp() async {
-  await GetStorage.init();
-  Get.put(AuthController(Get.put(AuthApiService()), Get.put(CacheService())),
+  // await GetStorage.init();
+  OAuthClientService _OAuthClientService = Get.put(OAuthClientService());
+  await _OAuthClientService.initCredentials();
+  Get.put(
+      AuthController(Get.put(AuthApiService()), Get.put(OAuthClientService())),
       permanent: true);
   log('Initialize');
 }
