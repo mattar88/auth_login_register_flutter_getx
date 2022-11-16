@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:auth_login_register_flutter_getx/services/oauth_client_service.dart';
+import '../services/oauth_client_service.dart';
 import 'package:oauth2/oauth2.dart';
 
 import '../routes/app_routes.dart';

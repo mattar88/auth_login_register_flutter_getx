@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:auth_login_register_flutter_getx/config/config_api.dart';
+import '../../config/config_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../controllers/login_controller.dart';

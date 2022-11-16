@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:auth_login_register_flutter_getx/services/oauth_client_service.dart';
+import '../services/oauth_client_service.dart';
 import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 import '../routes/app_pages.dart';

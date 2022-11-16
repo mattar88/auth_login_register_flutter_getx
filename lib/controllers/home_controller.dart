@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:auth_login_register_flutter_getx/services/oauth_client_service.dart';
+import '../services/oauth_client_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../controllers/auth_controller.dart';
