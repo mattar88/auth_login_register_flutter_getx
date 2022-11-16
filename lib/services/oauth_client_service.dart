@@ -40,8 +40,8 @@ class OAuthClientService extends GetxService {
 // available may not be able to make sure the client secret is kept a
 // secret. This is fine; OAuth2 servers generally won't rely on knowing
 // with certainty that a client is who it claims to be.
-  static const String clientId = 'cklX9qi2FGTEPPYqWD1zcsy8YAxh3ygXnoNcCQ6FdC0';
-  static const String clientSecret = 'secret';
+  static const String clientId = 'CLIENT_ID';
+  static const String clientSecret = 'CLIENT_SECRET';
 
   /// A file in which the users credentials are stored persistently. If the server
   /// issues a refresh token allowing the client to refresh outdated credentials,
