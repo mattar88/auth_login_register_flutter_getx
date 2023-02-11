@@ -113,10 +113,14 @@ Tools • Dart 2.18.1 • DevTools 2.15.0
   webview_flutter: ^3.0.4
 ``````
 
-## Change the project name
-1. flutter clean
-2. ``````Ctrl+Shift+F`````` then Search and replace all ``````auth_login_register_flutter_getx`````` with ``````NEW_PROJECT_NAME``````
-3. Search for ``````auth_login_register_flutter_getx`````` in the project folder, and replace them with ``````NEW_PROJECT_NAME`````` one by one. Some of them are in the text files, make sure that you have changed them too.
+## How to update app information and continue development for your own project?
+
+1. Rename root folder name
+2. Update project name and description from pubspec.yaml. 
+3. Update app launcher name and icon. [Reference](https://medium.com/@vaibhavi.rana99/change-application-name-and-icon-in-flutter-bebbec297c57)
+4. Update your app's package name by [running this command](https://pub.dev/packages/change_app_package_name):
+
+`flutter pub run change_app_package_name:main your_package_name`
 
 ## Installation
 1. Download Flutter version mentioned above
