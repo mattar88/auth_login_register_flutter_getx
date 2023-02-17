@@ -45,12 +45,12 @@ class ConnectivityService extends GetxService {
     Get.dialog(
       CupertinoAlertDialog(
         title: Row(children: [
-          Icon(Icons.signal_wifi_off_outlined),
+          const Icon(Icons.signal_wifi_off_outlined),
           Container(
-              margin: EdgeInsets.only(left: 5),
-              child: Text('You are currently offline')),
+              margin: const EdgeInsets.only(left: 5),
+              child: const Text('You are currently offline')),
         ]),
-        content: Text(
+        content: const Text(
             'Please turn on network connection to continue using this app'),
       ),
       barrierDismissible: true,

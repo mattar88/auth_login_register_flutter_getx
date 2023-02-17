@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../config/config_api.dart';
 import '../../controllers/signup_controller.dart';
-import '../../routes/app_routes.dart';
+import '../../routes/app_pages.dart';
 import '../../widgets/loading_overlay.dart';
 
 import 'package:get/get.dart';
@@ -108,8 +108,11 @@ class SignupScreen extends GetView<SignupController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Do you have account?'),
-                      const Text(
+                      Text('Already have an account?'),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(
                         'Login',
                         style: TextStyle(color: Colors.blue),
                       )

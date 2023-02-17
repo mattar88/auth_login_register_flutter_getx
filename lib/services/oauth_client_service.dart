@@ -1,20 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 import 'dart:io';
-import '../services/auth_api_service.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:oauth2/oauth2.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+
 import '../config/config_api.dart';
 import '../mixins/helper_mixin.dart';
-import 'oauth_client_service.dart';
 
 class OAuthClientService extends GetxService {
 // These URLs are endpoints that are provided by the authorization
@@ -56,17 +52,21 @@ class OAuthClientService extends GetxService {
   initCredentials() async {
     _directory = await getApplicationDocumentsDirectory();
     _credentialsFile = File('${_directory.path}/credentials.json');
-    _grant = oauth2.AuthorizationCodeGrant(
-        clientId, authorizationEndpoint, tokenEndpoint,
-        secret: clientSecret);
     credentials = await loadCredentails();
   }
 
   getAuthorizationUrl() {
+    // If we don't have OAuth2 credentials yet, we need to get the resource owner
+    // to authorize us. We're assuming here that we're a command-line application.
+    _grant = oauth2.AuthorizationCodeGrant(
+        clientId, authorizationEndpoint, tokenEndpoint,
+        secret: clientSecret);
     // A URL on the authorization server (authorizationEndpoint with some additional
     // query parameters). Scopes and state can optionally be passed into this method.
-    return _grant
-        .getAuthorizationUrl(Uri.parse(redirectUrl), scopes: ['access_token']);
+    return _grant.getAuthorizationUrl(
+      Uri.parse(redirectUrl),
+      scopes: ['access_token'],
+    );
   }
 
   /// Either load an OAuth2 client from saved credentials or authenticate a new one
@@ -100,51 +100,24 @@ class OAuthClientService extends GetxService {
   }
 
   Future<Credentials> refreshToken() async {
+    log('refresh-token');
     var credentials = await loadCredentails();
-
     try {
-      var response = await http.post(
-        Uri.parse(ConfigAPI.basrUrl + refreshTokenUrl),
-        body: {
-          'refresh_token': credentials!.refreshToken,
-          'grant_type': 'refresh_token',
-        },
-        headers: {
-          HttpHeaders.authorizationHeader: "Basic " +
-              base64Encode(utf8.encode(OAuthClientService.clientId +
-                  ':' +
-                  OAuthClientService.clientSecret))
-        },
-      );
+      if (credentials!.canRefresh) {
+        var cre = await credentials.refresh(
+            identifier: clientId, secret: clientSecret);
 
-      var nCredentials = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        //Expiration has Datetime data type and
-        //expires_in variable in second(example: 300) so should get the
-        //current time then convert to second divided by 1000 then add
-        //expires time in second then return it to milliseconds
-        var expiration = (((DateTime.now().millisecondsSinceEpoch / 1000) +
-                    nCredentials['expires_in']) *
-                1000)
-            .round();
-
-        var cre = Credentials(
-          nCredentials['access_token'],
-          expiration: DateTime.fromMillisecondsSinceEpoch(expiration),
-          refreshToken: nCredentials['refresh_token'],
-        );
         await saveCredentails(cre);
 
         return cre;
       } else {
-        throw Exception(nCredentials.toString());
+        throw 'Couuld not refresh the Token!';
       }
     } catch (e) {
       printError(
           info:
               'Oauth client service exception refreshToken:  ${e.toString()}');
-      rethrow;
+      throw 'Oauth client service exception refreshToken:  ${e.toString()}';
     }
   }
 
@@ -167,18 +140,12 @@ class OAuthClientService extends GetxService {
   }
 
   bool sessionIsExpired() {
-    if (sessionIsEmpty()) return true;
-    var expirationTime =
-        ((credentials!.expiration!.millisecondsSinceEpoch) / 1000);
     int currentTimestamp = HelperMixin.getTimestamp();
-    bool isExceeded = (expirationTime -
-            ConfigAPI.sessionTimeoutThreshold -
-            currentTimestamp) <=
-        0;
-
     printInfo(
         info:
-            'Expired in: ${credentials != null ? (expirationTime - ConfigAPI.sessionTimeoutThreshold - currentTimestamp) / 60 : 0} mins -- isExceeded: ${isExceeded.toString()}');
-    return isExceeded;
+            'Expired in: ${credentials != null ? (credentials!.expiration!.millisecondsSinceEpoch / 1000 - ConfigAPI.sessionTimeoutThreshold - currentTimestamp) / 60 : 0} mins -- isExceeded: ${credentials!.isExpired} and Can Refresh : ${credentials!.canRefresh}');
+    if (sessionIsEmpty()) return true;
+
+    return credentials!.isExpired;
   }
 }

@@ -3,9 +3,9 @@ import 'dart:developer';
 import '../../config/config_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../../controllers/login_controller.dart';
+import '../../controllers/login/login_controller.dart';
 import '../../mixins/helper_mixin.dart';
-import '../../routes/app_routes.dart';
+import '../../routes/app_pages.dart';
 import '../../services/oauth_client_service.dart';
 import '../../widgets/loading_overlay.dart';
 
@@ -14,8 +14,30 @@ import 'package:get/get.dart';
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);
 
+  void checkHeaderMessages(duration) {
+    if (Get.arguments != null &&
+        Get.arguments.containsKey('message') &&
+        Get.arguments['message'].containsKey('status_text') &&
+        Get.arguments['message']['status_text'] == 'session_expired') {
+      var message = Get.arguments['message']['body'];
+      Get.snackbar(
+        "Warning",
+        message.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        shouldIconPulse: true,
+        barBlur: 20,
+      );
+      Get.arguments.remove('message');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(checkHeaderMessages);
+
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -85,46 +107,7 @@ class LoginScreen extends GetView<LoginController> {
                     ElevatedButton(
                         onPressed: () async {
                           try {
-                            OAuthClientService _OAuthClientService = Get.find();
-                            // log('Url: ${_OAuthClientService.getAuthorizationUrl().toString()}');
-                            Get.to(Scaffold(
-                                body: SafeArea(
-                                    child: WebView(
-                              javascriptMode: JavascriptMode.unrestricted,
-                              initialUrl: Uri.decodeFull(
-                                  _OAuthClientService.getAuthorizationUrl()
-                                      .toString()),
-                              gestureNavigationEnabled: true,
-                              navigationDelegate: (navReq) async {
-                                log('Navvv');
-                                if (navReq.url.startsWith(OAuthClientService
-                                    .redirectUrl
-                                    .toString())) {
-                                  var responseUrl = Uri.parse(navReq.url);
-
-                                  if (responseUrl.queryParameters['code'] !=
-                                      null) {
-                                    // log('responseee ${navReq.url}, ${Uri.parse(navReq.url).queryParameters['code']}');
-
-                                    var client = await _OAuthClientService
-                                        .handleAuthorizationResponse(
-                                            responseUrl);
-
-                                    await _OAuthClientService.saveCredentails(
-                                        client!.credentials);
-
-                                    Get.toNamed(Routes.HOME);
-                                    // log('Cred exists: ${exists}');
-                                    return NavigationDecision.prevent;
-                                  }
-                                }
-                                return NavigationDecision.navigate;
-                              },
-                              // ------- 8< -------
-                            ))));
-
-                            // await controller.loginWithBrowser();
-                            // Get.offAllNamed(Routes.HOME);
+                            Get.toNamed(Routes.LOGIN_WEBVIEW);
                           } catch (err, _) {
                             printError(info: err.toString());
                             LoadingOverlay.hide();
@@ -150,8 +133,11 @@ class LoginScreen extends GetView<LoginController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text('Don\'t have an account?'),
+                          SizedBox(
+                            width: 3,
+                          ),
                           Text(
-                            'Create an account',
+                            'Sign Up',
                             style: TextStyle(color: Colors.blue),
                           )
                         ],

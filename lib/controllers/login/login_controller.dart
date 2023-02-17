@@ -3,14 +3,14 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../controllers/auth_controller.dart';
-import '../services/cache_service.dart';
-import '../services/oauth_client_service.dart';
-import '../widgets/Loading_overlay.dart';
+import '../auth_controller.dart';
+import '../../services/cache_service.dart';
+import '../../services/oauth_client_service.dart';
+import '../../widgets/Loading_overlay.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../services/auth_api_service.dart';
+import '../../services/auth_api_service.dart';
 
 class LoginController extends AuthController {
   final GlobalKey<FormState> loginFormKey =

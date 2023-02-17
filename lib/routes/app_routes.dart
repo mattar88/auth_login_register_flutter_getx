@@ -1,8 +1,8 @@
-// This file will contain your constants
-// part of 'app_pages.dart';
+part of 'app_pages.dart';
 
 abstract class Routes {
   static String HOME = '/';
   static String LOGIN = '/login';
+  static String LOGIN_WEBVIEW = '/login-webview';
   static String SIGNUP = '/signup';
 }

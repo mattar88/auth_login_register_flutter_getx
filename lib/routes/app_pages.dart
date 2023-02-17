@@ -1,19 +1,20 @@
 import 'dart:developer';
 
 import '../bindings/home_binding.dart';
-import '../bindings/login_binding.dart';
+import '../bindings/login/login_binding.dart';
+import '../bindings/login/login_webview_binding.dart';
 import '../bindings/signup_binding.dart';
 import '../middlewares/auth_middleware.dart';
-import '../routes/app_routes.dart';
+
 import '../screens/home/home_screen.dart';
+import '../screens/login/login_webview_screen.dart';
 import '../screens/signup/signup_screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import '../screens/login/login_screen.dart';
+part 'app_routes.dart';
 
-// part 'routes.dart';
-// This file will contain your array routing
 class AppPages {
   static List<GetPage> pages = [
     GetPage(
@@ -26,6 +27,11 @@ class AppPages {
         name: Routes.LOGIN,
         page: () => const LoginScreen(),
         binding: LoginBinding(),
+        transition: Transition.noTransition),
+    GetPage(
+        name: Routes.LOGIN_WEBVIEW,
+        page: () => const LoginWebviewScreen(),
+        binding: LoginWebviewBinding(),
         transition: Transition.noTransition),
     GetPage(
         name: Routes.SIGNUP,

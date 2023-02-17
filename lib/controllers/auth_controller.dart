@@ -3,7 +3,6 @@ import 'dart:developer';
 import '../services/oauth_client_service.dart';
 import 'package:oauth2/oauth2.dart';
 
-import '../routes/app_routes.dart';
 import '../services/cache_service.dart';
 import 'package:get/get.dart';
 import '../services/auth_api_service.dart';
@@ -55,7 +54,7 @@ class AuthController extends GetxController {
     try {
       return _oAuthClientService.refreshToken();
     } catch (e) {
-      printError(info: 'exception refreshToken 1:  ${e.toString()}');
+      printError(info: 'exception refreshToken:  ${e.toString()}');
       rethrow;
     }
   }

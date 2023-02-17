@@ -5,7 +5,7 @@ import '../services/oauth_client_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../controllers/auth_controller.dart';
-import '../routes/app_routes.dart';
+
 import '../services/cache_service.dart';
 import '../widgets/Loading_overlay.dart';
 import 'package:get/get.dart';
@@ -24,14 +24,14 @@ class HomeController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     OAuthClientService oAuthClientService = Get.find();
 
-    var response = await ovens();
-    log('load oven success');
+    var response = await load();
+    log('Home loaded successfully');
     // if done, change status to success
     change(null, status: RxStatus.success());
     super.onInit();
   }
 
-  Future ovens() async {
+  Future load() async {
     try {
       var response = await _homeApiService.loadHome();
       if (response.statusCode == 401) {
@@ -47,21 +47,10 @@ class HomeController extends GetxController with StateMixin {
       //
 
       // log('${json.decode(response.body)}');
-      // log('All ovens loaded successfully');
+
     } catch (err, _) {
       log('${err}');
       rethrow;
     }
-  }
-
-  getData() async {
-    // make status to loading
-    change(null, status: RxStatus.loading());
-    log('loading oven success');
-    // Code to get data
-    await ovens();
-    log('load oven success');
-    // if done, change status to success
-    change(null, status: RxStatus.success());
   }
 }

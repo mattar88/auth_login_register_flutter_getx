@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import '../config/config_api.dart';
 import 'api_service.dart';

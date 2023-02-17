@@ -1,17 +1,32 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import '../../config/config_api.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/home_controller.dart';
-import '../../routes/app_routes.dart';
+import '../../mixins/helper_mixin.dart';
+import '../../routes/app_pages.dart';
 import 'package:get/get.dart';
+
+import '../../services/oauth_client_service.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
+  String getSessionTime() {
+    try {
+      int currentTimestamp = HelperMixin.getTimestamp();
+      OAuthClientService oAuthClientService = Get.find();
+
+      var credentials = oAuthClientService.credentials;
+      return 'Expired in: ${credentials != null ? (credentials.expiration!.millisecondsSinceEpoch / 1000 - ConfigAPI.sessionTimeoutThreshold - currentTimestamp) / 60 : 0} mins';
+    } catch (err) {
+      return 'An error occurred when computing Session time';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    log('Go to home');
     return Scaffold(
       appBar: AppBar(
         leadingWidth: double.infinity,
@@ -21,19 +36,23 @@ class HomeScreen extends GetView<HomeController> {
         ),
       ),
       body: controller.obx(
-        (state) => Container(
-            child: Column(
-          children: [
-            const Text('This is the home page'),
-            ElevatedButton(
+        (state) => Center(
+          child: Container(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('This is the home page'),
+              Text(getSessionTime()),
+              ElevatedButton(
                 onPressed: () {
                   Get.find<AuthController>().signOut();
                   Get.offAllNamed(Routes.LOGIN);
                 },
-                child: const Text("Signout",
-                    style: TextStyle(color: Colors.blue))),
-          ],
-        )),
+                child: Text("Signout", style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          )),
+        ),
 
         // here you can put your custom loading indicator, but
         // by default would be Center(child:CircularProgressIndicator())

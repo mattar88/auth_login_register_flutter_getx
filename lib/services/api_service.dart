@@ -6,7 +6,7 @@ import 'package:oauth2/oauth2.dart';
 
 import '../config/config_api.dart';
 import '../controllers/auth_controller.dart';
-import '../routes/app_routes.dart';
+import '../routes/app_pages.dart';
 
 import 'package:get/get.dart';
 
@@ -49,33 +49,48 @@ class ApiService extends GetConnect {
 //addAuthenticator only is called after
 //a request (get/post/put/delete) that returns HTTP status code 401
     httpClient.addAuthenticator<dynamic>((request) async {
-      // request.headers.removeWhere((key, value) => key == "content-type");
       retry--;
       log('addAuthenticator ${request.url.toString()}');
 
       AuthController authController = Get.find();
-      Credentials? oauthCredentails;
+      OAuthClientService oAuthClientService = Get.find();
+      Credentials? oauthCredentails = oAuthClientService.credentials;
       try {
-        oauthCredentails = await authController.refreshToken();
-        log('addAuthenticator finish from refresh token, ${oauthCredentails!.toJson()}');
-        if (oauthCredentails != null) {
-          request.headers['Authorization'] =
-              'Bearer ${oauthCredentails.accessToken}';
+        if (oauthCredentails != null && oauthCredentails.canRefresh) {
+          oauthCredentails = await authController.refreshToken();
+
+          if (oauthCredentails!.accessToken.isNotEmpty) {
+            request.headers['Authorization'] =
+                'Bearer ${oauthCredentails.accessToken}';
+          } else {
+            if (retry == 0) {
+              retry = httpClient.maxAuthRetries;
+
+              if (!isLoginRequest(request)) {
+                // log('check is isLoginRequest(request): ${isLoginRequest(request)}');
+                Get.offAllNamed(Routes.LOGIN);
+              }
+            }
+          }
         } else {
           if (retry == 0) {
             retry = httpClient.maxAuthRetries;
-
             if (!isLoginRequest(request)) {
-              log('check is isLoginRequest(request): ${isLoginRequest(request)}');
-              Get.offAllNamed(Routes.LOGIN);
+              Get.offAllNamed(Routes.LOGIN, arguments: {
+                'message': {
+                  'status': 'warning',
+                  'status_text': 'session_expired',
+                  'body': 'Session expired please log in again.!'
+                }
+              });
             }
           }
         }
       } catch (err, _) {
         printError(info: err.toString());
 
-        authController.signOut();
-        Get.offAllNamed(Routes.LOGIN);
+        // authController.signOut();
+        // Get.offAllNamed(Routes.LOGIN);
       }
 
       return request;
@@ -86,19 +101,16 @@ class ApiService extends GetConnect {
 
       if (response.statusCode == 403) {
         return Response(request: request, statusCode: 401);
-        // httpClient.addAuthenticator(request);
       }
       return response;
     });
 
     httpClient.addRequestModifier<dynamic>((request) async {
-      log('call addRequestModifier , ${request.headers}');
+      // log('call addRequestModifier , ${request.headers}');
       AuthController authController = Get.find();
-      // request.headers.removeWhere((key, value) => key == "content-type");
 
-      // if (request.status == 403) {}
       if (authController.isAuthenticated()) {
-        log('Add Request Modifier is authenticated');
+        // log('Add Request Modifier is authenticated');
         request.headers['Authorization'] =
             'Bearer ${authController.tokenCredentials()!.accessToken}';
       } else {
@@ -107,9 +119,7 @@ class ApiService extends GetConnect {
             base64Encode(utf8.encode(OAuthClientService.clientId +
                 ':' +
                 OAuthClientService.clientSecret));
-        log('Header request: ${request.headers}');
       }
-      log('endof call addRequestModifier , ${request.toString()}');
       return request;
     });
   }
