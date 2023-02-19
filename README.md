@@ -1,6 +1,8 @@
 # Authentication Login and Register with Flutter Getx
 Flutter Getx project that covered a best MVC architecture and functionality of Authentication, Login and Register using Rest API
-In this project I used the powerful features of Getx like state management, Dependency injection, Route management, localStorage...
+It's a basic boilerplate template for starting a Flutter GetX project, In this project I used the powerful features of Getx like state 
+management, Dependency injection, Route management, localStorage...
+
 
 # OAuth Grant Types
 1. OAuth 2.0 Authorization Code Grant
