@@ -129,15 +129,25 @@ Tools • Dart 2.18.1 • DevTools 2.15.0
 2. Clone the project
 
 3. Open`````` lib  > confi > config_api.dart`````` then set the variables
+``````
+  //Example: https://www.example.com without /
+  static const String basrUrl = 'YOUR_BASE_PASS_APP';
+  ``````
 
 4. Open `````` lib > services > auth_api_service.dart``````  then set your REST API URL by changing the following variables
 ``````
- signUpUrl = '/jsonapi/user/register';
- signInUrl = '/oauth2/token';
+  static String signUpUrl = '/jsonapi/user/register';
+  static String signInUrl = '/oauth/token';
 ``````
 5. Open `````` lib > services > oauth_client_service.dart``````  then set your REST API URL by changing the following variables
 ``````
- authorizationUrl = '';
- refreshTokenUrl = '';
- redirectUrl = '';
+  static String authorizationUrl = '/oauth/authorize';
+  static String refreshTokenUrl = '/oauth/token';
+  static const String redirectUrl = ConfigAPI.basrUrl + '/';
+``````
+
+6.  In the same file `````` lib > services > oauth_client_service.dart``````  set the Client Id and Client Secret of your app
+``````
+  static const String clientId = 'CLIENT_ID';
+  static const String clientSecret = 'CLIENT_SECRET';
 ``````
