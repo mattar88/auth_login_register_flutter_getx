@@ -95,11 +95,10 @@ management, Dependency injection, Route management, localStorage...
 ## Flutter Version
 ``````
 PS > flutter --version
-Flutter 3.3.2 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision e3c29ec00c (8 weeks ago) • 2022-09-14 08:46:55 -0500
-Engine • revision a4ff2c53d8
-Tools • Dart 2.18.1 • DevTools 2.15.0
-
+Flutter 3.7.8 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 90c64ed42b (3 weeks ago) • 2023-03-21 11:27:08 -0500
+Engine • revision 9aa7816315
+Tools • Dart 2.19.5 • DevTools 2.20.1
 ``````
 ## Dependencies:
 ``````
