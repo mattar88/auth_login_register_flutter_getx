@@ -89,8 +89,14 @@ class ApiService extends GetConnect {
       } catch (err, _) {
         printError(info: err.toString());
 
-        // authController.signOut();
-        // Get.offAllNamed(Routes.LOGIN);
+        Get.offAllNamed(Routes.LOGIN, arguments: {
+          'message': {
+            'status': 'warning',
+            'status_text': 'session_expired',
+            'body':
+                'Session expired Or invalid refresh token, please log in again.!'
+          }
+        });
       }
 
       return request;
