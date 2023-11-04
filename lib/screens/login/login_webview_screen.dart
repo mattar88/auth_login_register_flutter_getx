@@ -18,14 +18,18 @@ class LoginWebviewScreen extends GetView<LoginWebviewController> {
             child: Stack(
       children: [
         WebView(
-          javascriptMode: JavascriptMode.unrestricted,
-          initialUrl: controller.initialUrl,
-          gestureNavigationEnabled: true,
-          onPageStarted: controller.onPageStarted,
-          onPageFinished: controller.onPageFinished,
-          onProgress: controller.onProgress,
-          navigationDelegate: controller.navigationDelegate,
-        ),
+            javascriptMode: JavascriptMode.unrestricted,
+            initialUrl: controller.initialUrl,
+            gestureNavigationEnabled: true,
+            onPageStarted: controller.onPageStarted,
+            onPageFinished: controller.onPageFinished,
+            onProgress: controller.onProgress,
+            navigationDelegate: controller.navigationDelegate,
+            onWebViewCreated: (webViewController) {
+              webViewController.clearCache();
+              final cookieManager = CookieManager();
+              cookieManager.clearCookies();
+            }),
         Obx(() => ((controller.loadingPercentage.value! < 100)
             ? LinearProgressIndicator(
                 value: controller.loadingPercentage / 100.0,
