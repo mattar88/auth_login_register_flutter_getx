@@ -111,7 +111,7 @@ Tools • Dart 2.19.5 • DevTools 2.20.1
   get_storage: ^2.0.3
   internet_connection_checker: ^0.0.1+3
   oauth2: ^2.0.0
-  webview_flutter: ^3.0.4
+  webview_flutter: ^4.4.2
 ``````
 
 ## How to update app information and continue development for your own project?

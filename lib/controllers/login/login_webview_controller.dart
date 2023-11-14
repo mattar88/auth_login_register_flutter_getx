@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -13,11 +14,31 @@ class LoginWebviewController extends GetxController {
   String? initialUrl;
   Rxn<bool> loading = Rxn<bool>(true);
   Rxn<int> loadingPercentage = Rxn<int>(0);
-
+  late WebViewController webViewController;
   @override
   void onInit() {
     initialUrl =
         Uri.decodeFull(_OAuthClientService.getAuthorizationUrl().toString());
+
+    //Clear cookies first to logout and to force login from web browser
+    WebViewCookieManager().clearCookies();
+
+    webViewController = WebViewController();
+    webViewController
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: onProgress,
+          // gestureNavigationEnabled: true,
+
+          onPageStarted: onPageStarted,
+          onPageFinished: onPageFinished,
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: navigationDelegate,
+        ),
+      )
+      ..loadRequest(Uri.parse(initialUrl!)).then((value) {});
+
     super.onInit();
   }
 

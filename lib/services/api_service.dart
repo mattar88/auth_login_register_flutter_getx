@@ -19,25 +19,6 @@ class ApiService extends GetConnect {
         request.url.toString());
   }
 
-//
-//  Return true when the token refreshed successfully or the user is authenticated
-//
-  static Future<bool> checkAuthAndRefresh() async {
-    AuthController authController = Get.find();
-    OAuthClientService oAuthClientService = Get.find();
-
-    if (!authController.isAuthenticated()) {
-      Credentials? oauthCredentails = await authController.refreshToken();
-      if (oauthCredentails == null) {
-        authController.signOut();
-        Get.offAllNamed(Routes.LOGIN);
-        return false;
-      }
-      return true;
-    }
-    return true;
-  }
-
   int retry = 0;
   @override
   void onInit() {
@@ -103,11 +84,13 @@ class ApiService extends GetConnect {
     });
 
     httpClient.addResponseModifier((request, response) {
-      log('call addREsponseModifier ${response.statusCode}, ${request.url}');
-
-      if (response.statusCode == 403) {
-        return Response(request: request, statusCode: 401);
-      }
+      //Some resources have been omitted because of insufficient authorization
+      // var body = jsonDecode(response.body.toString());
+      // if (body != null &&
+      //     body.containsKey('meta') &&
+      //     body['meta'].containsKey('omitted')) {
+      //   return Response(request: request, statusCode: 401);
+      // }
       return response;
     });
 
@@ -119,13 +102,8 @@ class ApiService extends GetConnect {
         // log('Add Request Modifier is authenticated');
         request.headers['Authorization'] =
             'Bearer ${authController.tokenCredentials()!.accessToken}';
-      } else {
-        log('addRequestModifier else condition ');
-        request.headers['Authorization'] = 'Basic ' +
-            base64Encode(utf8.encode(OAuthClientService.clientId +
-                ':' +
-                OAuthClientService.clientSecret));
       }
+
       return request;
     });
   }
