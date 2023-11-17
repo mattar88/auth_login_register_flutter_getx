@@ -98,8 +98,10 @@ class ApiService extends GetConnect {
       // log('call addRequestModifier , ${request.headers}');
       AuthController authController = Get.find();
 
-      if (authController.isAuthenticated()) {
-        // log('Add Request Modifier is authenticated');
+      var tc = authController.tokenCredentials();
+
+      if (tc != null && tc.accessToken.isNotEmpty) {
+        // log('Add Request Modifier is authenticated ${authController.tokenCredentials()!.accessToken}');
         request.headers['Authorization'] =
             'Bearer ${authController.tokenCredentials()!.accessToken}';
       }
