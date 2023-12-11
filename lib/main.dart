@@ -1,14 +1,11 @@
 import 'dart:developer';
 
-import '../services/oauth_client_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../routes/app_pages.dart';
 import '../services/auth_api_service.dart';
-import '../services/cache_service.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-
+import '../services/oauth_client_service.dart';
 import 'bindings/app_binding.dart';
 import 'controllers/auth_controller.dart';
 
