@@ -1,28 +1,23 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 
+import 'package:get/get.dart';
 import 'package:oauth2/oauth2.dart';
 
 import '../config/config_api.dart';
 import '../controllers/auth_controller.dart';
 import '../routes/app_pages.dart';
-
-import 'package:get/get.dart';
-
 import 'auth_api_service.dart';
-import 'oauth_client_service.dart';
 
 class ApiService extends GetConnect {
   bool isLoginRequest(request) {
-    return (ConfigAPI.basrUrl + AuthApiService.signInUrl ==
+    return (ConfigAPI.baseUrl + AuthApiService.signInUrl ==
         request.url.toString());
   }
 
   int retry = 0;
   @override
   void onInit() {
-    httpClient.baseUrl = ConfigAPI.basrUrl;
+    httpClient.baseUrl = ConfigAPI.baseUrl;
     httpClient.timeout = const Duration(seconds: 30);
     httpClient.maxAuthRetries = retry = 3;
     httpClient.followRedirects = true;
@@ -34,8 +29,8 @@ class ApiService extends GetConnect {
       log('addAuthenticator ${request.url.toString()}');
 
       AuthController authController = Get.find();
-      OAuthClientService oAuthClientService = Get.find();
-      Credentials? oauthCredentails = oAuthClientService.credentials;
+      AuthApiService authService = Get.find();
+      Credentials? oauthCredentails = authService.credentials;
       try {
         if (oauthCredentails != null && oauthCredentails.canRefresh) {
           oauthCredentails = await authController.refreshToken();

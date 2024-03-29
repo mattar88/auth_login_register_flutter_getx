@@ -1,15 +1,10 @@
-import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/config_api.dart';
-import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../controllers/login/login_controller.dart';
-import '../../mixins/helper_mixin.dart';
 import '../../routes/app_pages.dart';
-import '../../services/oauth_client_service.dart';
 import '../../widgets/loading_overlay.dart';
-
-import 'package:get/get.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);

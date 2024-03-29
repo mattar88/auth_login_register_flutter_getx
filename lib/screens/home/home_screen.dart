@@ -1,79 +1,123 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import '../../config/config_api.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/home_controller.dart';
-import '../../mixins/helper_mixin.dart';
-import '../../routes/app_pages.dart';
 import 'package:get/get.dart';
 
-import '../../services/oauth_client_service.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/home_controller.dart';
+import '../../routes/app_pages.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
-  String getSessionTime() {
-    try {
-      int currentTimestamp = HelperMixin.getTimestamp();
-      OAuthClientService oAuthClientService = Get.find();
-
-      var credentials = oAuthClientService.credentials;
-      return 'Expired in: ${credentials != null ? (credentials.expiration!.millisecondsSinceEpoch / 1000 - ConfigAPI.sessionTimeoutThreshold - currentTimestamp) / 60 : 0} mins';
-    } catch (err) {
-      return 'An error occurred when computing Session time';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leadingWidth: double.infinity,
-        title: const Text(
-          'Home',
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 28),
-        ),
-      ),
-      body: controller.obx(
-        (state) => Center(
-          child: Container(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('This is the home page'),
-              Text(getSessionTime()),
-              ElevatedButton(
-                onPressed: () {
-                  Get.find<AuthController>().signOut();
-                  Get.offAllNamed(Routes.LOGIN);
-                },
-                child: Text("Signout", style: TextStyle(color: Colors.white)),
-              ),
-            ],
-          )),
-        ),
-
-        // here you can put your custom loading indicator, but
-        // by default would be Center(child:CircularProgressIndicator())
-        onLoading: CircularProgressIndicator(),
-        onEmpty: Column(
-          children: [
-            const Text('No Data found'),
+        appBar: AppBar(
+          actions: [
             ElevatedButton(
-                onPressed: () {
-                  Get.find<AuthController>().signOut();
-                  Get.offAllNamed(Routes.LOGIN);
-                },
-                child: const Text("Signout",
-                    style: TextStyle(color: Colors.white))),
+              onPressed: () {
+                Get.find<AuthController>().signOut();
+                Get.offAllNamed(Routes.LOGIN);
+              },
+              child:
+                  const Text("Signout", style: TextStyle(color: Colors.white)),
+            )
           ],
+          // leadingWidth: double.infinity,
+          title: const Text(
+            'Auth Login Register Flutter Getx',
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 28),
+          ),
         ),
-
-        // here also you can set your own error widget, but by
-        // default will be an Center(child:Text(error))
-        onError: (error) => Text(''),
-      ),
-    );
+        body: Obx(
+          () {
+            return SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            Icon(Icons.timer_sharp),
+                            Text(
+                              'The session expired in:',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          child: Text(controller.sessionTime.value),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.all(10),
+                            child: const Text(
+                              'Credentials:',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                        ListTile(
+                            leading: const Text(
+                              'Access token',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title:
+                                Text(controller.credentails.value.accessToken)),
+                        ListTile(
+                            leading: const Text(
+                              'Refresh token',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(
+                                controller.credentails.value.refreshToken!)),
+                        ListTile(
+                            leading: const Text(
+                              'CanRefresh',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(controller.credentails.value.canRefresh
+                                .toString())),
+                        ListTile(
+                            leading: const Text(
+                              'Expiration',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(controller.credentails.value.expiration
+                                .toString())),
+                        ListTile(
+                            leading: const Text(
+                              'idToken',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(controller.credentails.value.idToken
+                                .toString())),
+                        ListTile(
+                            leading: const Text(
+                              'isExpired',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(controller.credentails.value.isExpired
+                                .toString())),
+                        ListTile(
+                            leading: const Text(
+                              'tokenEndPoint',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(controller
+                                .credentails.value.tokenEndpoint
+                                .toString())),
+                        ListTile(
+                            leading: const Text(
+                              'Scopes',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            title: Text(controller.credentails.value.scopes
+                                .toString())),
+                      ],
+                    )));
+          },
+        ));
   }
 }

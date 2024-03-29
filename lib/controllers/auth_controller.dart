@@ -1,24 +1,21 @@
-import 'dart:convert';
 import 'dart:developer';
-import '../services/oauth_client_service.dart';
+
+import 'package:get/get.dart';
 import 'package:oauth2/oauth2.dart';
 
-import '../services/cache_service.dart';
-import 'package:get/get.dart';
 import '../services/auth_api_service.dart';
 
 //This controller doesn't have view page but used
 // for some widget button like signout and other
 class AuthController extends GetxController {
   final AuthApiService _authenticationService;
-  final OAuthClientService _oAuthClientService;
 
-  AuthController(this._authenticationService, this._oAuthClientService);
+  AuthController(this._authenticationService);
 
   Future<Credentials?> signIn(String email, String password) async {
     try {
       log('Enter Signin');
-      return await _oAuthClientService.authGrantPassword(email, password);
+      return await _authenticationService.authGrantPassword(email, password);
       // log('is logged in : ${crednetials!.accessToken}');
     } catch (e) {
       // printLog(e);
@@ -52,20 +49,20 @@ class AuthController extends GetxController {
 
   Future<Credentials?> refreshToken() async {
     try {
-      return _oAuthClientService.refreshToken();
+      return _authenticationService.refreshToken();
     } catch (e) {
       printError(info: 'exception refreshToken:  ${e.toString()}');
       rethrow;
     }
   }
 
-  Credentials? tokenCredentials() => _oAuthClientService.credentials;
+  Credentials? tokenCredentials() => _authenticationService.credentials;
 
   void signOut() async {
-    _oAuthClientService.removeCredentails();
+    _authenticationService.removeCredentails();
   }
 
   bool isAuthenticated() {
-    return !_oAuthClientService.sessionIsExpired();
+    return !_authenticationService.sessionIsExpired();
   }
 }

@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 
 import '../routes/app_pages.dart';
 import '../services/auth_api_service.dart';
-import '../services/oauth_client_service.dart';
 import 'bindings/app_binding.dart';
 import 'controllers/auth_controller.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,11 +36,8 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> initializeApp() async {
-  // await GetStorage.init();
-  OAuthClientService _OAuthClientService = Get.put(OAuthClientService());
-  await _OAuthClientService.initCredentials();
-  Get.put(
-      AuthController(Get.put(AuthApiService()), Get.put(OAuthClientService())),
-      permanent: true);
+  AuthApiService authApiService = Get.put(AuthApiService());
+  await authApiService.initCredentials();
+  Get.put(AuthController(authApiService), permanent: true);
   log('Initialize');
 }

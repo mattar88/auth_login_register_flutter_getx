@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../routes/app_pages.dart';
-import '../../services/oauth_client_service.dart';
+import '../../services/auth_api_service.dart';
 
 class LoginWebviewController extends GetxController {
-  final OAuthClientService _OAuthClientService;
-  LoginWebviewController(this._OAuthClientService);
+  final AuthApiService _authApiService;
+  LoginWebviewController(this._authApiService);
   String? initialUrl;
   Rxn<bool> loading = Rxn<bool>(true);
   Rxn<int> loadingPercentage = Rxn<int>(0);
@@ -18,7 +17,7 @@ class LoginWebviewController extends GetxController {
   @override
   void onInit() {
     initialUrl =
-        Uri.decodeFull(_OAuthClientService.getAuthorizationUrl().toString());
+        Uri.decodeFull(_authApiService.getAuthorizationUrl().toString());
 
     //Clear cookies first to logout and to force login from web browser
     WebViewCookieManager().clearCookies();
@@ -45,14 +44,14 @@ class LoginWebviewController extends GetxController {
   FutureOr<NavigationDecision> navigationDelegate(
       NavigationRequest navReq) async {
     log('Navvv');
-    if (navReq.url.startsWith(OAuthClientService.redirectUrl.toString())) {
+    if (navReq.url.startsWith(AuthApiService.redirectUrl.toString())) {
       var responseUrl = Uri.parse(navReq.url);
 
       if (responseUrl.queryParameters['code'] != null) {
         var client =
-            await _OAuthClientService.handleAuthorizationResponse(responseUrl);
+            await _authApiService.handleAuthorizationResponse(responseUrl);
 
-        await _OAuthClientService.saveCredentails(client!.credentials);
+        await _authApiService.saveCredentails(client!.credentials);
 
         Get.offAllNamed(Routes.HOME);
 

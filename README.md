@@ -54,21 +54,19 @@ management, Dependency injection, Route management, localStorage...
      - api_service.dart
      #Contains the sigin and signup rest api functions
      - auth_api_service.dart
-     #Contains the functions that communicate with the local storage to CRUD the access token and other variables using get_storage package
+     #Contains the functionality of Authorization and Authentication to the server
      - cache_service.dart 
      #It responsible to the status of internet connection it use internet_connection_checker package
      - connectivity_service.dart
      #Contains the REST api service of home
      - home_api_service.dart
-      #Contains the REST api service of home
-     -oauth_client_service.dart
-     #Contains the endpoints and the  functionality for Client  OAuth2
+      #Contains Empty example of the REST api service
+ 
  - /controllers
      # Responsible for signin and signup and share this functionality with login and signup controllers
      - auth_controller.dart  
      #Contains the logic and the functionality of home page
      - home_controller.dart  
-     #Containes the logic of Login page(Form validations, sigin request and other) and inherit some functionality from auth controller
      - login_controller.dart  
      #Containes the logic of Login page and inherit some functionality from auth controller
      - signup_controller.dart.dart
@@ -137,16 +135,9 @@ Tools • Dart 2.19.5 • DevTools 2.20.1
 ``````
   static String signUpUrl = '/jsonapi/user/register';
   static String signInUrl = '/oauth/token';
-``````
-5. Open `````` lib > services > oauth_client_service.dart``````  then set your REST API URL by changing the following variables
-``````
   static String authorizationUrl = '/oauth/authorize';
   static String refreshTokenUrl = '/oauth/token';
   static const String redirectUrl = ConfigAPI.basrUrl + '/';
-``````
-
-6.  In the same file `````` lib > services > oauth_client_service.dart``````  set the Client Id and Client Secret of your app
-``````
   static const String clientId = 'CLIENT_ID';
   static const String clientSecret = 'CLIENT_SECRET';
 ``````

@@ -1,13 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
-
-import '../config/config_api.dart';
-import '../services/oauth_client_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../config/config_api.dart';
 import '../controllers/auth_controller.dart';
-import '../services/cache_service.dart';
-
 import '../services/auth_api_service.dart';
 
 class SignupController extends AuthController {
@@ -27,9 +22,8 @@ class SignupController extends AuthController {
   FocusNode passwordFocusNode = FocusNode();
   FocusNode confirmPasswordFocusNode = FocusNode();
 
-  SignupController(AuthApiService authenticationService,
-      OAuthClientService oauthClientService)
-      : super(authenticationService, oauthClientService);
+  SignupController(AuthApiService authenticationService)
+      : super(authenticationService);
 
   void onInit() {
     _addListener();

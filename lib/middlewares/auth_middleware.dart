@@ -1,17 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
-import '../services/cache_service.dart';
 import 'package:get/get.dart';
+
 import '../routes/app_pages.dart';
-import '../services/oauth_client_service.dart';
+import '../services/auth_api_service.dart';
 
 class AuthMiddleware extends GetMiddleware {
-  final OAuthClientService _OAuthClientService = Get.find();
+  final AuthApiService _authenticationService = Get.find();
 
   @override
   RouteSettings? redirect(String? route) {
-    if (_OAuthClientService.sessionIsEmpty()) {
+    if (_authenticationService.sessionIsEmpty()) {
       return RouteSettings(name: Routes.LOGIN);
     }
   }
