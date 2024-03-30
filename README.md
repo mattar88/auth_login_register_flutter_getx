@@ -140,4 +140,5 @@ Tools • Dart 2.19.5 • DevTools 2.20.1
   static const String redirectUrl = ConfigAPI.basrUrl + '/';
   static const String clientId = 'CLIENT_ID';
   static const String clientSecret = 'CLIENT_SECRET';
+  static const List<String> scopes = [];
 ``````

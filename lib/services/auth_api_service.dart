@@ -40,6 +40,7 @@ class AuthApiService extends ApiService {
 // with certainty that a client is who it claims to be.
   static const String clientId = 'CLIENT_ID';
   static const String clientSecret = 'CLIENT_SECRET';
+  static const List<String> scopes = [];
 
   /// A file in which the users credentials are stored persistently. If the server
   /// issues a refresh token allowing the client to refresh outdated credentials,
@@ -67,7 +68,7 @@ class AuthApiService extends ApiService {
     // query parameters). Scopes and state can optionally be passed into this method.
     return _grant.getAuthorizationUrl(
       Uri.parse(redirectUrl),
-      // scopes: ['access_token'],
+      scopes: scopes,
     );
   }
 

@@ -9,3 +9,6 @@ Improve code and functionality
 Improve documentation and code and solve problems
 Merge functionalities
 
+## 4.0.1
+Make scopes as variable list
+
